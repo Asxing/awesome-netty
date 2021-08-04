@@ -12,6 +12,8 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <google-java-format.version>1.9</google-java-format.version>
+        <netty.version>4.1.6.Final</netty.version>
     </properties>
 
     <build>
@@ -32,7 +34,12 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.6.Final</version>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.googlejavaformat</groupId>
+            <artifactId>google-java-format</artifactId>
+            <version>${google-java-format.version}</version>
         </dependency>
     </dependencies>
 </project>
