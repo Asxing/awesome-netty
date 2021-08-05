@@ -1,5 +1,7 @@
 package com.asxing.netty.protocol.command;
 
+import com.asxing.netty.protocol.request.LoginRequestPacket;
+import com.asxing.netty.protocol.response.LoginResponsePacket;
 import com.asxing.netty.serialize.Serializer;
 import com.asxing.netty.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -10,24 +12,27 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.asxing.netty.protocol.command.Command.LOGIN_REQUEST;
+import static com.asxing.netty.protocol.command.Command.LOGIN_RESPONSE;
 
 public class PacketCodeC {
     private static final int MAGIC_NUMBER = 0x12345678;
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
+    public static final PacketCodeC INSTANCE = new PacketCodeC();
 
     static {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
+        PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         JSONSerializer serializer = new JSONSerializer();
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 创建ByteBuf对象
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
+        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
         // 序列化Java对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
