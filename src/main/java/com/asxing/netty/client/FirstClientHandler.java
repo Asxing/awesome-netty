@@ -11,9 +11,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * @author asxing
- */
+/** @author asxing */
 public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -36,7 +34,8 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
             if (loginResponsePacket.isSuccess()) {
                 System.out.println(new Date() + ": 客户端登录成功");
             } else {
-                System.out.println(new Date() + ": 客户端登录失败, 原因: " + loginResponsePacket.getReason());
+                System.out.println(
+                        new Date() + ": 客户端登录失败, 原因: " + loginResponsePacket.getReason());
             }
         }
     }

@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-
 public class PacketCodeCTest {
 
     private PacketCodeC packetCodeCUnderTest;
@@ -29,7 +28,8 @@ public class PacketCodeCTest {
         loginRequestPacket.setUserId(UUID.randomUUID().toString());
         loginRequestPacket.setPassword("pwd");
 
-        final ByteBuf result = packetCodeCUnderTest.encode(ByteBufAllocator.DEFAULT, loginRequestPacket);
+        final ByteBuf result =
+                packetCodeCUnderTest.encode(ByteBufAllocator.DEFAULT, loginRequestPacket);
         final Packet packet = packetCodeCUnderTest.decode(result);
 
         Assert.assertArrayEquals(
