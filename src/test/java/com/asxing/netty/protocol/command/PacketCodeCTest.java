@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 
 public class PacketCodeCTest {
 
@@ -29,6 +28,7 @@ public class PacketCodeCTest {
         final ByteBuf result = packetCodeCUnderTest.encode(loginRequestPacket);
         final Packet packet = packetCodeCUnderTest.decode(result);
 
-        Assert.assertArrayEquals(serializer.serialize(loginRequestPacket), serializer.serialize(packet));
+        Assert.assertArrayEquals(
+                serializer.serialize(loginRequestPacket), serializer.serialize(packet));
     }
 }

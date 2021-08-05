@@ -2,13 +2,9 @@ package com.asxing.netty.protocol.command;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
-/**
- * @author asxing
- */
+/** @author asxing */
 public abstract class Packet {
-    /**
-     * 协议版本
-     */
+    /** 协议版本 */
     @JSONField(deserialize = false, serialize = false)
     private Byte version = 1;
 

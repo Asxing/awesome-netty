@@ -1,6 +1,5 @@
 package com.asxing.netty.serialize;
 
-
 import com.asxing.netty.serialize.impl.JSONSerializer;
 
 public interface Serializer {

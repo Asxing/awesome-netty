@@ -40,7 +40,6 @@ public class PacketCodeC {
         return byteBuf;
     }
 
-
     public Packet decode(ByteBuf byteBuf) {
         // 跳过魔数
         byteBuf.skipBytes(4);
