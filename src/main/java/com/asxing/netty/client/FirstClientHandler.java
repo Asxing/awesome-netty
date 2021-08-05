@@ -13,9 +13,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * @author asxing
- */
+/** @author asxing */
 public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {

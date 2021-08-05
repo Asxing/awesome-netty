@@ -72,18 +72,23 @@ public class NettyClient {
     }
 
     private static void startConsoleThread(Channel channel) {
-        new Thread(() -> {
-            while (!Thread.interrupted()) {
-                if (LoginUtil.hasLogin(channel)) {
-                    System.out.println("发送消息到服务器");
-                    Scanner scanner = new Scanner(System.in);
-                    String line = scanner.nextLine();
-                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                    messageRequestPacket.setMessage(line);
-                    ByteBuf buffer = PacketCodeC.INSTANCE.encode(channel.alloc(), messageRequestPacket);
-                    channel.writeAndFlush(buffer);
-                }
-            }
-        }).start();
+        new Thread(
+                        () -> {
+                            while (!Thread.interrupted()) {
+                                if (LoginUtil.hasLogin(channel)) {
+                                    System.out.println("发送消息到服务器");
+                                    Scanner scanner = new Scanner(System.in);
+                                    String line = scanner.nextLine();
+                                    MessageRequestPacket messageRequestPacket =
+                                            new MessageRequestPacket();
+                                    messageRequestPacket.setMessage(line);
+                                    ByteBuf buffer =
+                                            PacketCodeC.INSTANCE.encode(
+                                                    channel.alloc(), messageRequestPacket);
+                                    channel.writeAndFlush(buffer);
+                                }
+                            }
+                        })
+                .start();
     }
 }
