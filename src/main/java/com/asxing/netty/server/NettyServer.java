@@ -27,21 +27,27 @@ public class NettyServer {
                 .option(ChannelOption.SO_BACKLOG, 1024)
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childOption(ChannelOption.TCP_NODELAY, true)
-                .handler(new ChannelInitializer<NioServerSocketChannel>() {
-                    @Override
-                    protected void initChannel(NioServerSocketChannel ch) {
-                        System.out.println("服务启动中");
-                        System.out.println("handler attr serverName 对应的值：" + ch.attr(serverName).get());
-                    }
-                })
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
-                    @Override
-                    protected void initChannel(NioSocketChannel ch) {
-                        System.out.println("新连接建立中");
-                        System.out.println("childHandler attr clientKey 对应的值：" + ch.attr(clientKey).get());
-                        ch.pipeline().addLast(new FirstServerHandler());
-                    }
-                });
+                .handler(
+                        new ChannelInitializer<NioServerSocketChannel>() {
+                            @Override
+                            protected void initChannel(NioServerSocketChannel ch) {
+                                System.out.println("服务启动中");
+                                System.out.println(
+                                        "handler attr serverName 对应的值："
+                                                + ch.attr(serverName).get());
+                            }
+                        })
+                .childHandler(
+                        new ChannelInitializer<NioSocketChannel>() {
+                            @Override
+                            protected void initChannel(NioSocketChannel ch) {
+                                System.out.println("新连接建立中");
+                                System.out.println(
+                                        "childHandler attr clientKey 对应的值："
+                                                + ch.attr(clientKey).get());
+                                ch.pipeline().addLast(new FirstServerHandler());
+                            }
+                        });
         bind(serverBootstrap, BEGIN_PORT);
     }
 
@@ -49,16 +55,19 @@ public class NettyServer {
      * 端口绑定
      *
      * @param serverBootstrap bootstrap
-     * @param port            端口
+     * @param port 端口
      */
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
-        serverBootstrap.bind(port).addListener(future -> {
-            if (future.isSuccess()) {
-                System.out.println("端口[" + port + "]绑定成功!");
-            } else {
-                System.err.println("端口[" + port + "]绑定失败!");
-                bind(serverBootstrap, port + 1);
-            }
-        });
+        serverBootstrap
+                .bind(port)
+                .addListener(
+                        future -> {
+                            if (future.isSuccess()) {
+                                System.out.println("端口[" + port + "]绑定成功!");
+                            } else {
+                                System.err.println("端口[" + port + "]绑定失败!");
+                                bind(serverBootstrap, port + 1);
+                            }
+                        });
     }
 }

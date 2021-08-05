@@ -21,7 +21,10 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf byteBuf = (ByteBuf) msg;
-        System.out.println(new Date() + ": server receive data -> " + byteBuf.toString(StandardCharsets.UTF_8));
+        System.out.println(
+                new Date()
+                        + ": server receive data -> "
+                        + byteBuf.toString(StandardCharsets.UTF_8));
         System.out.println(new Date() + ": server write date");
         byte[] bytes = "hi, 欢迎关注我的微信公众号 布斯行 !".getBytes(StandardCharsets.UTF_8);
         ByteBuf buffer = ctx.alloc().buffer();
