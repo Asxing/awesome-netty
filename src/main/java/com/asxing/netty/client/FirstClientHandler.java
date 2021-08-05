@@ -7,9 +7,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-/**
- * @author asxing
- */
+/** @author asxing */
 public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -23,6 +21,9 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
-        System.out.println(new Date() + ": client receive data -> " + byteBuf.toString(StandardCharsets.UTF_8));
+        System.out.println(
+                new Date()
+                        + ": client receive data -> "
+                        + byteBuf.toString(StandardCharsets.UTF_8));
     }
 }

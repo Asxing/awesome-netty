@@ -8,7 +8,7 @@ public class ByteBufTest {
         ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(9, 100);
         print("allocate ByteBuf(9, 100)", buffer);
 
-        buffer.writeBytes(new byte[]{1, 2, 3, 4});
+        buffer.writeBytes(new byte[] {1, 2, 3, 4});
         print("writeBytes(new byte[]{1,2,3,4})", buffer);
 
         // int 占四个字节
@@ -37,7 +37,6 @@ public class ByteBufTest {
         buffer.readBytes(dst);
         print("readBytes(" + dst.length + ")", buffer);
     }
-
 
     private static void print(String action, ByteBuf buffer) {
         System.out.println("after ======" + action + "=====");
