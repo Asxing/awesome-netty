@@ -3,7 +3,9 @@ package com.asxing.netty.server;
 import com.asxing.netty.protocol.command.Packet;
 import com.asxing.netty.protocol.command.PacketCodeC;
 import com.asxing.netty.protocol.request.LoginRequestPacket;
+import com.asxing.netty.protocol.request.MessageRequestPacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
+import com.asxing.netty.protocol.response.MessageResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -30,6 +32,14 @@ public class FirstServerHandler extends ChannelInboundHandlerAdapter {
                 System.out.println(new Date() + ": 登录失败!");
             }
             ByteBuf buffer = PacketCodeC.INSTANCE.encode(ctx.alloc(), loginResponsePacket);
+            ctx.channel().writeAndFlush(buffer);
+        } else if (packet instanceof MessageRequestPacket) {
+            MessageRequestPacket messageRequestPacket = (MessageRequestPacket) packet;
+            System.out.println(new Date() + ": 收到客户端消息: " + messageRequestPacket.getMessage());
+
+            MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
+            messageResponsePacket.setMessage("服务端回复【" + messageRequestPacket.getMessage() + "】");
+            ByteBuf buffer = PacketCodeC.INSTANCE.encode(ctx.alloc(), messageResponsePacket);
             ctx.channel().writeAndFlush(buffer);
         }
     }

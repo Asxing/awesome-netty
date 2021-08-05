@@ -1,7 +1,9 @@
 package com.asxing.netty.protocol.command;
 
 import com.asxing.netty.protocol.request.LoginRequestPacket;
+import com.asxing.netty.protocol.request.MessageRequestPacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
+import com.asxing.netty.protocol.response.MessageResponsePacket;
 import com.asxing.netty.serialize.Serializer;
 import com.asxing.netty.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
@@ -11,8 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.asxing.netty.protocol.command.Command.LOGIN_REQUEST;
-import static com.asxing.netty.protocol.command.Command.LOGIN_RESPONSE;
+import static com.asxing.netty.protocol.command.Command.*;
 
 public class PacketCodeC {
     private static final int MAGIC_NUMBER = 0x12345678;
@@ -24,6 +25,8 @@ public class PacketCodeC {
         PACKET_TYPE_MAP = new HashMap<>();
         PACKET_TYPE_MAP.put(LOGIN_REQUEST, LoginRequestPacket.class);
         PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         JSONSerializer serializer = new JSONSerializer();

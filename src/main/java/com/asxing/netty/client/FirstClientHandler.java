@@ -4,6 +4,8 @@ import com.asxing.netty.protocol.command.Packet;
 import com.asxing.netty.protocol.command.PacketCodeC;
 import com.asxing.netty.protocol.request.LoginRequestPacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
+import com.asxing.netty.protocol.response.MessageResponsePacket;
+import com.asxing.netty.utils.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -11,7 +13,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.util.Date;
 import java.util.UUID;
 
-/** @author asxing */
+/**
+ * @author asxing
+ */
 public class FirstClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -32,11 +36,15 @@ public class FirstClientHandler extends ChannelInboundHandlerAdapter {
         if (packet instanceof LoginResponsePacket) {
             LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet;
             if (loginResponsePacket.isSuccess()) {
+                LoginUtil.markAsLogin(ctx.channel());
                 System.out.println(new Date() + ": 客户端登录成功");
             } else {
                 System.out.println(
                         new Date() + ": 客户端登录失败, 原因: " + loginResponsePacket.getReason());
             }
+        } else if (packet instanceof MessageResponsePacket) {
+            MessageResponsePacket messageResponsePacket = (MessageResponsePacket) packet;
+            System.out.println(new Date() + ": 收到服务端的信息: " + messageResponsePacket.getMessage());
         }
     }
 }
