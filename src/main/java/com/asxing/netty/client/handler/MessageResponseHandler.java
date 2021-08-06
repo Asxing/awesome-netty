@@ -11,6 +11,7 @@ public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageR
             throws Exception {
         String fromUserId = messageResponsePacket.getFromUserId();
         String fromUserName = messageResponsePacket.getFromUserName();
-        System.out.println(fromUserId + ":" + fromUserName + "-> " + messageResponsePacket.getMessage());
+        System.out.println(
+                fromUserId + ":" + fromUserName + "-> " + messageResponsePacket.getMessage());
     }
 }

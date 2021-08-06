@@ -82,24 +82,26 @@ public class NettyClient {
     private static void startConsoleThread(Channel channel) {
         Scanner scanner = new Scanner(System.in);
         new Thread(
-                () -> {
-                    while (!Thread.interrupted()) {
-                        if (SessionUtil.hasLogin(channel)) {
-                            System.out.println("发送消息到服务器:");
-                            String toUserId = scanner.next();
-                            String message = scanner.next();
-                            channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
-                        } else {
-                            System.out.println("请输入用户名登录: ");
-                            String userName = scanner.nextLine();
-                            LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-                            loginRequestPacket.setUserName(userName);
-                            loginRequestPacket.setPassword("pwd");
-                            channel.writeAndFlush(loginRequestPacket);
-                            waitForLoginResponse();
-                        }
-                    }
-                })
+                        () -> {
+                            while (!Thread.interrupted()) {
+                                if (SessionUtil.hasLogin(channel)) {
+                                    System.out.println("发送消息到服务器:");
+                                    String toUserId = scanner.next();
+                                    String message = scanner.next();
+                                    channel.writeAndFlush(
+                                            new MessageRequestPacket(toUserId, message));
+                                } else {
+                                    System.out.println("请输入用户名登录: ");
+                                    String userName = scanner.nextLine();
+                                    LoginRequestPacket loginRequestPacket =
+                                            new LoginRequestPacket();
+                                    loginRequestPacket.setUserName(userName);
+                                    loginRequestPacket.setPassword("pwd");
+                                    channel.writeAndFlush(loginRequestPacket);
+                                    waitForLoginResponse();
+                                }
+                            }
+                        })
                 .start();
     }
 

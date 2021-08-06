@@ -10,8 +10,7 @@ public class MessageRequestPacket extends Packet {
 
     private String message;
 
-    public MessageRequestPacket() {
-    }
+    public MessageRequestPacket() {}
 
     public MessageRequestPacket(String toUserId, String line) {
         this.toUserId = toUserId;
