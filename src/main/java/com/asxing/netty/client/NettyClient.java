@@ -4,6 +4,7 @@ import com.asxing.netty.client.handler.LoginResponseHandler;
 import com.asxing.netty.client.handler.MessageResponseHandler;
 import com.asxing.netty.codec.PacketDecoder;
 import com.asxing.netty.codec.PacketEncoder;
+import com.asxing.netty.codec.Spliter;
 import com.asxing.netty.protocol.request.MessageRequestPacket;
 import com.asxing.netty.utils.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
@@ -41,6 +42,7 @@ public class NettyClient {
                             protected void initChannel(SocketChannel ch) {
                                 System.out.println(
                                         "handler attr clientKey 对应的值：" + ch.attr(clientKey).get());
+                                ch.pipeline().addLast(new Spliter());
                                 ch.pipeline().addLast(new PacketDecoder());
                                 ch.pipeline().addLast(new LoginResponseHandler());
                                 ch.pipeline().addLast(new MessageResponseHandler());
@@ -78,16 +80,16 @@ public class NettyClient {
 
     private static void startConsoleThread(Channel channel) {
         new Thread(
-                        () -> {
-                            while (!Thread.interrupted()) {
-                                if (LoginUtil.hasLogin(channel)) {
-                                    System.out.println("发送消息到服务器:");
-                                    Scanner scanner = new Scanner(System.in);
-                                    String string = scanner.nextLine();
-                                    channel.writeAndFlush(new MessageRequestPacket(string));
-                                }
-                            }
-                        })
+                () -> {
+                    while (!Thread.interrupted()) {
+                        if (LoginUtil.hasLogin(channel)) {
+                            System.out.println("发送消息到服务器:");
+                            Scanner scanner = new Scanner(System.in);
+                            String string = scanner.nextLine();
+                            channel.writeAndFlush(new MessageRequestPacket(string));
+                        }
+                    }
+                })
                 .start();
     }
 }

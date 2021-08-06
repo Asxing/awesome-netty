@@ -15,7 +15,7 @@ import java.util.Objects;
 import static com.asxing.netty.protocol.command.Command.*;
 
 public class PacketCodeC {
-    private static final int MAGIC_NUMBER = 0x12345678;
+    public static final int MAGIC_NUMBER = 0x12345678;
     private static final Map<Byte, Class<? extends Packet>> PACKET_TYPE_MAP;
     private static final Map<Byte, Serializer> SERIALIZER_MAP;
     public static final PacketCodeC INSTANCE = new PacketCodeC();
