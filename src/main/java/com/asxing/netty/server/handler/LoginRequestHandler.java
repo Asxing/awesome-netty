@@ -1,9 +1,7 @@
 package com.asxing.netty.server.handler;
 
-import com.asxing.netty.protocol.command.PacketCodeC;
 import com.asxing.netty.protocol.request.LoginRequestPacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -11,7 +9,8 @@ import java.util.Date;
 
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket)
+            throws Exception {
         System.out.println(new Date() + ": 客户端开始登录.......");
         LoginResponsePacket packet = new LoginResponsePacket();
         packet.setVersion(loginRequestPacket.getVersion());

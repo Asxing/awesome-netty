@@ -8,7 +8,9 @@ import java.util.Date;
 
 public class MessageResponseHandler extends SimpleChannelInboundHandler<MessageResponsePacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageResponsePacket messageResponsePacket) throws Exception {
+    protected void channelRead0(
+            ChannelHandlerContext ctx, MessageResponsePacket messageResponsePacket)
+            throws Exception {
         System.out.println(new Date() + ": 收到服务端的信息: " + messageResponsePacket.getMessage());
     }
 }
