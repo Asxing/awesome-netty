@@ -3,6 +3,7 @@ package com.asxing.netty.server;
 import com.asxing.netty.codec.PacketDecoder;
 import com.asxing.netty.codec.PacketEncoder;
 import com.asxing.netty.codec.Spliter;
+import com.asxing.netty.server.handler.LifeCycleTestHandler;
 import com.asxing.netty.server.handler.LoginRequestHandler;
 import com.asxing.netty.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
@@ -51,6 +52,7 @@ public class NettyServer {
                                         "childHandler attr clientKey 对应的值："
                                                 + ch.attr(clientKey).get());
                                 ch.pipeline().addLast(new Spliter());
+                                ch.pipeline().addLast(new LifeCycleTestHandler());
                                 ch.pipeline().addLast(new PacketDecoder());
                                 ch.pipeline().addLast(new LoginRequestHandler());
                                 ch.pipeline().addLast(new MessageRequestHandler());
@@ -64,7 +66,7 @@ public class NettyServer {
      * 端口绑定
      *
      * @param serverBootstrap bootstrap
-     * @param port 端口
+     * @param port            端口
      */
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
         serverBootstrap
