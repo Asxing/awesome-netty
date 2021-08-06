@@ -8,6 +8,13 @@ public class MessageRequestPacket extends Packet {
 
     private String message;
 
+    public MessageRequestPacket() {
+    }
+
+    public MessageRequestPacket(String line) {
+        this.message = line;
+    }
+
     @Override
     public Byte getCommand() {
         return MESSAGE_REQUEST;

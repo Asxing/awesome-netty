@@ -1,11 +1,9 @@
 package com.asxing.netty.server;
 
-import com.asxing.netty.server.handler.inbound.InBoundHandlerA;
-import com.asxing.netty.server.handler.inbound.InBoundHandlerB;
-import com.asxing.netty.server.handler.inbound.InBoundHandlerC;
-import com.asxing.netty.server.handler.outbound.OutBoundHandlerA;
-import com.asxing.netty.server.handler.outbound.OutBoundHandlerB;
-import com.asxing.netty.server.handler.outbound.OutBoundHandlerC;
+import com.asxing.netty.codec.PacketDecoder;
+import com.asxing.netty.codec.PacketEncoder;
+import com.asxing.netty.server.handler.LoginRequestHandler;
+import com.asxing.netty.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -51,13 +49,10 @@ public class NettyServer {
                                 System.out.println(
                                         "childHandler attr clientKey 对应的值："
                                                 + ch.attr(clientKey).get());
-                                ch.pipeline().addLast(new InBoundHandlerA());
-                                ch.pipeline().addLast(new InBoundHandlerB());
-                                ch.pipeline().addLast(new InBoundHandlerC());
-
-                                ch.pipeline().addLast(new OutBoundHandlerA());
-                                ch.pipeline().addLast(new OutBoundHandlerB());
-                                ch.pipeline().addLast(new OutBoundHandlerC());
+                                ch.pipeline().addLast(new PacketDecoder());
+                                ch.pipeline().addLast(new LoginRequestHandler());
+                                ch.pipeline().addLast(new MessageRequestHandler());
+                                ch.pipeline().addLast(new PacketEncoder());
                             }
                         });
         bind(serverBootstrap, BEGIN_PORT);
@@ -67,7 +62,7 @@ public class NettyServer {
      * 端口绑定
      *
      * @param serverBootstrap bootstrap
-     * @param port 端口
+     * @param port            端口
      */
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
         serverBootstrap

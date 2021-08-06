@@ -29,7 +29,7 @@ public class PacketCodeCTest {
         loginRequestPacket.setPassword("pwd");
 
         final ByteBuf result =
-                packetCodeCUnderTest.encode(ByteBufAllocator.DEFAULT, loginRequestPacket);
+                packetCodeCUnderTest.encode(ByteBufAllocator.DEFAULT.buffer(), loginRequestPacket);
         final Packet packet = packetCodeCUnderTest.decode(result);
 
         Assert.assertArrayEquals(

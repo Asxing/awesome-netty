@@ -1,10 +1,14 @@
 package com.asxing.netty.client;
 
-import com.asxing.netty.protocol.command.PacketCodeC;
+import com.asxing.netty.client.handler.LoginResponseHandler;
+import com.asxing.netty.client.handler.MessageResponseHandler;
+import com.asxing.netty.codec.PacketDecoder;
+import com.asxing.netty.codec.PacketEncoder;
 import com.asxing.netty.protocol.request.MessageRequestPacket;
+import com.asxing.netty.protocol.response.MessageResponsePacket;
+import com.asxing.netty.server.handler.MessageRequestHandler;
 import com.asxing.netty.utils.LoginUtil;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -39,7 +43,10 @@ public class NettyClient {
                             protected void initChannel(SocketChannel ch) {
                                 System.out.println(
                                         "handler attr clientKey 对应的值：" + ch.attr(clientKey).get());
-                                ch.pipeline().addLast(new FirstClientHandler());
+                                ch.pipeline().addLast(new PacketDecoder());
+                                ch.pipeline().addLast(new LoginResponseHandler());
+                                ch.pipeline().addLast(new MessageResponseHandler());
+                                ch.pipeline().addLast(new PacketEncoder());
                             }
                         });
         connect(bootstrap, "localhost", 1000, MAX_RETRY);
@@ -73,22 +80,16 @@ public class NettyClient {
 
     private static void startConsoleThread(Channel channel) {
         new Thread(
-                        () -> {
-                            while (!Thread.interrupted()) {
-                                if (LoginUtil.hasLogin(channel)) {
-                                    System.out.println("发送消息到服务器");
-                                    Scanner scanner = new Scanner(System.in);
-                                    String line = scanner.nextLine();
-                                    MessageRequestPacket messageRequestPacket =
-                                            new MessageRequestPacket();
-                                    messageRequestPacket.setMessage(line);
-                                    ByteBuf buffer =
-                                            PacketCodeC.INSTANCE.encode(
-                                                    channel.alloc(), messageRequestPacket);
-                                    channel.writeAndFlush(buffer);
-                                }
-                            }
-                        })
+                () -> {
+                    while (!Thread.interrupted()) {
+                        if (LoginUtil.hasLogin(channel)) {
+                            System.out.println("发送消息到服务器:");
+                            Scanner scanner = new Scanner(System.in);
+                            String string = scanner.nextLine();
+                            channel.writeAndFlush(new MessageRequestPacket(string));
+                        }
+                    }
+                })
                 .start();
     }
 }

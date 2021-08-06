@@ -7,7 +7,6 @@ import com.asxing.netty.protocol.response.MessageResponsePacket;
 import com.asxing.netty.serialize.Serializer;
 import com.asxing.netty.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,9 +32,7 @@ public class PacketCodeC {
         SERIALIZER_MAP.put(serializer.getSerializerAlgorithm(), serializer);
     }
 
-    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
-        // 创建ByteBuf对象
-        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
+    public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
         // 序列化Java对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
