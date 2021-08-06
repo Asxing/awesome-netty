@@ -2,6 +2,7 @@ package com.asxing.netty.server.handler;
 
 import com.asxing.netty.protocol.request.LoginRequestPacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
+import com.asxing.netty.utils.LoginUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
@@ -17,6 +18,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         if (valid(loginRequestPacket)) {
             packet.setSuccess(true);
             System.out.println(new Date() + ": 登录成功!");
+            LoginUtil.markAsLogin(ctx.channel());
         } else {
             packet.setReason("账号密码校验失败!");
             packet.setSuccess(false);

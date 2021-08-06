@@ -3,6 +3,7 @@ package com.asxing.netty.server;
 import com.asxing.netty.codec.PacketDecoder;
 import com.asxing.netty.codec.PacketEncoder;
 import com.asxing.netty.codec.Spliter;
+import com.asxing.netty.server.handler.AuthHandler;
 import com.asxing.netty.server.handler.LifeCycleTestHandler;
 import com.asxing.netty.server.handler.LoginRequestHandler;
 import com.asxing.netty.server.handler.MessageRequestHandler;
@@ -55,6 +56,7 @@ public class NettyServer {
                                 ch.pipeline().addLast(new LifeCycleTestHandler());
                                 ch.pipeline().addLast(new PacketDecoder());
                                 ch.pipeline().addLast(new LoginRequestHandler());
+                                ch.pipeline().addLast(new AuthHandler());
                                 ch.pipeline().addLast(new MessageRequestHandler());
                                 ch.pipeline().addLast(new PacketEncoder());
                             }
