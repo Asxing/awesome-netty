@@ -6,11 +6,15 @@ import static com.asxing.netty.protocol.command.Command.MESSAGE_REQUEST;
 
 public class MessageRequestPacket extends Packet {
 
+    private String toUserId;
+
     private String message;
 
-    public MessageRequestPacket() {}
+    public MessageRequestPacket() {
+    }
 
-    public MessageRequestPacket(String line) {
+    public MessageRequestPacket(String toUserId, String line) {
+        this.toUserId = toUserId;
         this.message = line;
     }
 
@@ -25,5 +29,13 @@ public class MessageRequestPacket extends Packet {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId;
     }
 }
