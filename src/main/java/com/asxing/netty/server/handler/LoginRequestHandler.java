@@ -24,7 +24,8 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
             String userId = randomUserId();
             packet.setUserId(userId);
             System.out.println("[" + loginRequestPacket.getUserName() + "]登录成功");
-            SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUserName()), ctx.channel());
+            SessionUtil.bindSession(
+                    new Session(userId, loginRequestPacket.getUserName()), ctx.channel());
         } else {
             packet.setReason("账号密码校验失败!");
             packet.setSuccess(false);
@@ -36,7 +37,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
     private static String randomUserId() {
         return UUID.randomUUID().toString().split("-")[0];
     }
-
 
     private boolean valid(LoginRequestPacket loginRequestPacket) {
         return true;
