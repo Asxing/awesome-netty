@@ -7,7 +7,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class LogoutResponseHandler extends SimpleChannelInboundHandler<LogoutResponsePacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LogoutResponsePacket logoutResponsePacket) throws Exception {
+    protected void channelRead0(
+            ChannelHandlerContext ctx, LogoutResponsePacket logoutResponsePacket) throws Exception {
         SessionUtil.unBindSession(ctx.channel());
     }
 }

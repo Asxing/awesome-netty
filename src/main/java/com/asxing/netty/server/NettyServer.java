@@ -78,7 +78,7 @@ public class NettyServer {
      * 端口绑定
      *
      * @param serverBootstrap bootstrap
-     * @param port            端口
+     * @param port 端口
      */
     private static void bind(final ServerBootstrap serverBootstrap, final int port) {
         serverBootstrap

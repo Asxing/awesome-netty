@@ -10,7 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionUtil {
     private static final Map<String, Channel> USER_ID_CHANNEL_MAP = new ConcurrentHashMap<>();
-    private static final Map<String, ChannelGroup> GROUP_ID_CHANNEL_GROUP_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, ChannelGroup> GROUP_ID_CHANNEL_GROUP_MAP =
+            new ConcurrentHashMap<>();
 
     public static void bindSession(Session session, Channel channel) {
         USER_ID_CHANNEL_MAP.put(session.getUserId(), channel);

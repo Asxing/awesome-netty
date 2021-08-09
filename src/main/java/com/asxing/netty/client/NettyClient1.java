@@ -94,15 +94,15 @@ public class NettyClient1 {
         LogInConsoleCommand logInConsoleCommand = new LogInConsoleCommand();
         Scanner scanner = new Scanner(System.in);
         new Thread(
-                () -> {
-                    while (!Thread.interrupted()) {
-                        if (SessionUtil.hasLogin(channel)) {
-                            consoleCommandManager.exec(scanner, channel);
-                        } else {
-                            logInConsoleCommand.exec(scanner, channel);
-                        }
-                    }
-                })
+                        () -> {
+                            while (!Thread.interrupted()) {
+                                if (SessionUtil.hasLogin(channel)) {
+                                    consoleCommandManager.exec(scanner, channel);
+                                } else {
+                                    logInConsoleCommand.exec(scanner, channel);
+                                }
+                            }
+                        })
                 .start();
     }
 }

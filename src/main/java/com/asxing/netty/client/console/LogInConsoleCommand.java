@@ -5,7 +5,7 @@ import io.netty.channel.Channel;
 
 import java.util.Scanner;
 
-public class LogInConsoleCommand implements ConsoleCommand{
+public class LogInConsoleCommand implements ConsoleCommand {
     @Override
     public void exec(Scanner scanner, Channel channel) {
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
