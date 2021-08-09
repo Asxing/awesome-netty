@@ -3,21 +3,23 @@ package com.asxing.netty.utils;
 import com.asxing.netty.attribute.Attributes;
 import com.asxing.netty.session.Session;
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SessionUtil {
-    private static final Map<String, Channel> userIdChannelMap = new ConcurrentHashMap<>();
+    private static final Map<String, Channel> USER_ID_CHANNEL_MAP = new ConcurrentHashMap<>();
+    private static final Map<String, ChannelGroup> GROUP_ID_CHANNEL_GROUP_MAP = new ConcurrentHashMap<>();
 
     public static void bindSession(Session session, Channel channel) {
-        userIdChannelMap.put(session.getUserId(), channel);
+        USER_ID_CHANNEL_MAP.put(session.getUserId(), channel);
         channel.attr(Attributes.SESSION).set(session);
     }
 
     public static void unBindSession(Channel channel) {
         if (hasLogin(channel)) {
-            userIdChannelMap.remove(getSession(channel).getUserId());
+            USER_ID_CHANNEL_MAP.remove(getSession(channel).getUserId());
             channel.attr(Attributes.SESSION).set(null);
         }
     }
@@ -33,7 +35,14 @@ public class SessionUtil {
     }
 
     public static Channel getChannel(String userId) {
+        return USER_ID_CHANNEL_MAP.get(userId);
+    }
 
-        return userIdChannelMap.get(userId);
+    public static void bindChannelGroup(String groupId, ChannelGroup channelGroup) {
+        GROUP_ID_CHANNEL_GROUP_MAP.put(groupId, channelGroup);
+    }
+
+    public static ChannelGroup getChannelGroup(String groupId) {
+        return GROUP_ID_CHANNEL_GROUP_MAP.get(groupId);
     }
 }

@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class NettyClient1 {
+public class NettyClient2 {
 
     private static final int MAX_RETRY = 5;
 

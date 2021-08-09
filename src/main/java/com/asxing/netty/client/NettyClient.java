@@ -3,9 +3,12 @@ package com.asxing.netty.client;
 import com.asxing.netty.client.console.ConsoleCommandManager;
 import com.asxing.netty.client.console.LogInConsoleCommand;
 import com.asxing.netty.client.handler.CreateGroupResponseHandler;
+import com.asxing.netty.client.handler.JoinGroupResponseHandler;
+import com.asxing.netty.client.handler.ListGroupMemberReponseHandler;
 import com.asxing.netty.client.handler.LoginResponseHandler;
 import com.asxing.netty.client.handler.LogoutResponseHandler;
 import com.asxing.netty.client.handler.MessageResponseHandler;
+import com.asxing.netty.client.handler.QuitGroupResponseHanlder;
 import com.asxing.netty.codec.PacketDecoder;
 import com.asxing.netty.codec.PacketEncoder;
 import com.asxing.netty.codec.Spliter;
@@ -48,9 +51,12 @@ public class NettyClient {
                                 ch.pipeline().addLast(new Spliter());
                                 ch.pipeline().addLast(new PacketDecoder());
                                 ch.pipeline().addLast(new LoginResponseHandler());
-                                ch.pipeline().addLast(new LogoutResponseHandler());
                                 ch.pipeline().addLast(new MessageResponseHandler());
                                 ch.pipeline().addLast(new CreateGroupResponseHandler());
+                                ch.pipeline().addLast(new JoinGroupResponseHandler());
+                                ch.pipeline().addLast(new QuitGroupResponseHanlder());
+                                ch.pipeline().addLast(new ListGroupMemberReponseHandler());
+                                ch.pipeline().addLast(new LogoutResponseHandler());
                                 ch.pipeline().addLast(new PacketEncoder());
                             }
                         });
