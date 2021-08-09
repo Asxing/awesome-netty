@@ -1,8 +1,12 @@
 package com.asxing.netty.protocol.command;
 
+import com.asxing.netty.protocol.request.CreateGroupRequestPacket;
 import com.asxing.netty.protocol.request.LoginRequestPacket;
+import com.asxing.netty.protocol.request.LogoutRequestPacket;
 import com.asxing.netty.protocol.request.MessageRequestPacket;
+import com.asxing.netty.protocol.response.CreateGroupResponsePacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
+import com.asxing.netty.protocol.response.LogoutResponsePacket;
 import com.asxing.netty.protocol.response.MessageResponsePacket;
 import com.asxing.netty.serialize.Serializer;
 import com.asxing.netty.serialize.impl.JSONSerializer;
@@ -26,6 +30,10 @@ public class PacketCodeC {
         PACKET_TYPE_MAP.put(LOGIN_RESPONSE, LoginResponsePacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_REQUEST, MessageRequestPacket.class);
         PACKET_TYPE_MAP.put(MESSAGE_RESPONSE, MessageResponsePacket.class);
+        PACKET_TYPE_MAP.put(LOGOUT_REQUEST, LogoutRequestPacket.class);
+        PACKET_TYPE_MAP.put(LOGOUT_RESPONSE, LogoutResponsePacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_REQUEST, CreateGroupRequestPacket.class);
+        PACKET_TYPE_MAP.put(CREATE_GROUP_RESPONSE, CreateGroupResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         JSONSerializer serializer = new JSONSerializer();

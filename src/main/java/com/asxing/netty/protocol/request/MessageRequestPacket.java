@@ -12,9 +12,9 @@ public class MessageRequestPacket extends Packet {
 
     public MessageRequestPacket() {}
 
-    public MessageRequestPacket(String toUserId, String line) {
+    public MessageRequestPacket(String toUserId, String message) {
         this.toUserId = toUserId;
-        this.message = line;
+        this.message = message;
     }
 
     @Override
