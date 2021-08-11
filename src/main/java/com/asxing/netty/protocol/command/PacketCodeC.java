@@ -1,6 +1,7 @@
 package com.asxing.netty.protocol.command;
 
 import com.asxing.netty.protocol.request.CreateGroupRequestPacket;
+import com.asxing.netty.protocol.request.GroupMessageRequestPacket;
 import com.asxing.netty.protocol.request.JoinGroupRequestPacket;
 import com.asxing.netty.protocol.request.ListGroupMemberRequestPacket;
 import com.asxing.netty.protocol.request.LoginRequestPacket;
@@ -8,6 +9,7 @@ import com.asxing.netty.protocol.request.LogoutRequestPacket;
 import com.asxing.netty.protocol.request.MessageRequestPacket;
 import com.asxing.netty.protocol.request.QuitGroupRequestPacket;
 import com.asxing.netty.protocol.response.CreateGroupResponsePacket;
+import com.asxing.netty.protocol.response.GroupMessageResponsePacket;
 import com.asxing.netty.protocol.response.JoinGroupResponsePacket;
 import com.asxing.netty.protocol.response.ListGroupMemberResponsePacket;
 import com.asxing.netty.protocol.response.LoginResponsePacket;
@@ -46,6 +48,8 @@ public class PacketCodeC {
         PACKET_TYPE_MAP.put(QUIT_GROUP_RESPONSE, QuitGroupResponsePacket.class);
         PACKET_TYPE_MAP.put(LIST_GROUP_MEMBER_REQUEST, ListGroupMemberRequestPacket.class);
         PACKET_TYPE_MAP.put(LIST_GROUP_MEMBER_RESPONSE, ListGroupMemberResponsePacket.class);
+        PACKET_TYPE_MAP.put(GROUP_MESSAGE_REQUEST, GroupMessageRequestPacket.class);
+        PACKET_TYPE_MAP.put(GROUP_MESSAGE_RESPONSE, GroupMessageResponsePacket.class);
 
         SERIALIZER_MAP = new HashMap<>();
         JSONSerializer serializer = new JSONSerializer();

@@ -3,6 +3,7 @@ package com.asxing.netty.client;
 import com.asxing.netty.client.console.ConsoleCommandManager;
 import com.asxing.netty.client.console.LogInConsoleCommand;
 import com.asxing.netty.client.handler.CreateGroupResponseHandler;
+import com.asxing.netty.client.handler.GroupMessageResponseHandler;
 import com.asxing.netty.client.handler.JoinGroupResponseHandler;
 import com.asxing.netty.client.handler.ListGroupMemberReponseHandler;
 import com.asxing.netty.client.handler.LoginResponseHandler;
@@ -56,6 +57,7 @@ public class NettyClient {
                                 ch.pipeline().addLast(new JoinGroupResponseHandler());
                                 ch.pipeline().addLast(new QuitGroupResponseHanlder());
                                 ch.pipeline().addLast(new ListGroupMemberReponseHandler());
+                                ch.pipeline().addLast(new GroupMessageResponseHandler());
                                 ch.pipeline().addLast(new LogoutResponseHandler());
                                 ch.pipeline().addLast(new PacketEncoder());
                             }
