@@ -8,8 +8,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class LifeCycleHandler extends ChannelInboundHandlerAdapter {
     public static final LifeCycleHandler INSTANCE = new LifeCycleHandler();
 
-    private LifeCycleHandler() {
-    }
+    private LifeCycleHandler() {}
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {

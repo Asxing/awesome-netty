@@ -15,14 +15,15 @@ import java.util.List;
 import java.util.Objects;
 
 @ChannelHandler.Sharable
-public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+public class CreateGroupRequestHandler
+        extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
     public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
 
-    private CreateGroupRequestHandler() {
-    }
+    private CreateGroupRequestHandler() {}
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket requestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket requestPacket)
+            throws Exception {
         List<String> userIdList = requestPacket.getUserIdList();
         ArrayList<String> userNameList = new ArrayList<>();
         DefaultChannelGroup channelGroup = new DefaultChannelGroup(ctx.executor());

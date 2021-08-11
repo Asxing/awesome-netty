@@ -6,7 +6,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class QuitGroupResponseHanlder extends SimpleChannelInboundHandler<QuitGroupResponsePacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, QuitGroupResponsePacket msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, QuitGroupResponsePacket msg)
+            throws Exception {
         if (msg.getSuccess()) {
             System.out.println("退出群聊[" + msg.getGroupId() + "]成功!");
         } else {

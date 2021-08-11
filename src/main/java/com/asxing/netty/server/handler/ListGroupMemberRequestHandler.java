@@ -13,17 +13,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ChannelHandler.Sharable
-public class ListGroupMemberRequestHandler extends SimpleChannelInboundHandler<ListGroupMemberRequestPacket> {
-    public static final ListGroupMemberRequestHandler INSTANCE = new ListGroupMemberRequestHandler();
+public class ListGroupMemberRequestHandler
+        extends SimpleChannelInboundHandler<ListGroupMemberRequestPacket> {
+    public static final ListGroupMemberRequestHandler INSTANCE =
+            new ListGroupMemberRequestHandler();
 
-    private ListGroupMemberRequestHandler() {
-    }
+    private ListGroupMemberRequestHandler() {}
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ListGroupMemberRequestPacket requestPacket) throws Exception {
+    protected void channelRead0(
+            ChannelHandlerContext ctx, ListGroupMemberRequestPacket requestPacket)
+            throws Exception {
         String groupId = requestPacket.getGroupId();
         ChannelGroup channelGroup = SessionUtil.getChannelGroup(groupId);
-        List<Session> sessionList = channelGroup.stream().map(SessionUtil::getSession).collect(Collectors.toList());
+        List<Session> sessionList =
+                channelGroup.stream().map(SessionUtil::getSession).collect(Collectors.toList());
         ListGroupMemberResponsePacket responsePacket = new ListGroupMemberResponsePacket();
         responsePacket.setGroupId(groupId);
         responsePacket.setSessionList(sessionList);

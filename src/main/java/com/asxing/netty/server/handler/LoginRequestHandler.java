@@ -16,8 +16,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
     public static final LoginRequestHandler INSTANCE = new LoginRequestHandler();
 
-    private LoginRequestHandler() {
-    }
+    private LoginRequestHandler() {}
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket)
@@ -40,11 +39,15 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
             packet.setSuccess(false);
             System.out.println(new Date() + ": 登录失败!");
         }
-        ctx.channel().writeAndFlush(packet).addListener(future -> {
-            if (future.isSuccess()) {
-                System.out.println("登录执行时长为: " + (System.currentTimeMillis() - start) + "ms");
-            }
-        });
+        ctx.channel()
+                .writeAndFlush(packet)
+                .addListener(
+                        future -> {
+                            if (future.isSuccess()) {
+                                System.out.println(
+                                        "登录执行时长为: " + (System.currentTimeMillis() - start) + "ms");
+                            }
+                        });
     }
 
     private static String randomUserId() {

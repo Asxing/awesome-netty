@@ -13,18 +13,19 @@ import java.util.List;
 public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
     public static final PacketCodecHandler INSTANCE = new PacketCodecHandler();
 
-    private PacketCodecHandler() {
-    }
+    private PacketCodecHandler() {}
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, Packet packet, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, Packet packet, List<Object> out)
+            throws Exception {
         ByteBuf byteBuf = ctx.channel().alloc().ioBuffer();
         PacketCodeC.INSTANCE.encode(byteBuf, packet);
         out.add(byteBuf);
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> out)
+            throws Exception {
         out.add(PacketCodeC.INSTANCE.decode(byteBuf));
     }
 }

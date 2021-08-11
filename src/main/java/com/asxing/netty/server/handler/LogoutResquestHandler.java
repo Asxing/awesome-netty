@@ -11,11 +11,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class LogoutResquestHandler extends SimpleChannelInboundHandler<LogoutRequestPacket> {
     public static final LogoutResquestHandler INSTANCE = new LogoutResquestHandler();
 
-    private LogoutResquestHandler() {
-    }
+    private LogoutResquestHandler() {}
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, LogoutRequestPacket logoutRequestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, LogoutRequestPacket logoutRequestPacket)
+            throws Exception {
         SessionUtil.unBindSession(ctx.channel());
         LogoutResponsePacket logoutResponsePacket = new LogoutResponsePacket();
         logoutResponsePacket.setSuccess(true);

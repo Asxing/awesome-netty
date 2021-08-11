@@ -9,14 +9,15 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 
 @ChannelHandler.Sharable
-public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
-    public static final GroupMessageRequestHandler INSTANCE  = new GroupMessageRequestHandler();
+public class GroupMessageRequestHandler
+        extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
+    public static final GroupMessageRequestHandler INSTANCE = new GroupMessageRequestHandler();
 
-    private GroupMessageRequestHandler() {
-    }
+    private GroupMessageRequestHandler() {}
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket requestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket requestPacket)
+            throws Exception {
         String groupId = requestPacket.getGroupId();
         GroupMessageResponsePacket responsePacket = new GroupMessageResponsePacket();
         responsePacket.setFromGroupId(groupId);
