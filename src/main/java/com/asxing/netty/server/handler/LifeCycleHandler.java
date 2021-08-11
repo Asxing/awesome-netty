@@ -1,9 +1,15 @@
 package com.asxing.netty.server.handler;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-public class LifeCycleTestHandler extends ChannelInboundHandlerAdapter {
+@ChannelHandler.Sharable
+public class LifeCycleHandler extends ChannelInboundHandlerAdapter {
+    public static final LifeCycleHandler INSTANCE = new LifeCycleHandler();
+
+    private LifeCycleHandler() {
+    }
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {

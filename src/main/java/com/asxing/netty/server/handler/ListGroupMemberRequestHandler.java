@@ -4,6 +4,7 @@ import com.asxing.netty.protocol.request.ListGroupMemberRequestPacket;
 import com.asxing.netty.protocol.response.ListGroupMemberResponsePacket;
 import com.asxing.netty.session.Session;
 import com.asxing.netty.utils.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -11,7 +12,13 @@ import io.netty.channel.group.ChannelGroup;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@ChannelHandler.Sharable
 public class ListGroupMemberRequestHandler extends SimpleChannelInboundHandler<ListGroupMemberRequestPacket> {
+    public static final ListGroupMemberRequestHandler INSTANCE = new ListGroupMemberRequestHandler();
+
+    private ListGroupMemberRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ListGroupMemberRequestPacket requestPacket) throws Exception {
         String groupId = requestPacket.getGroupId();

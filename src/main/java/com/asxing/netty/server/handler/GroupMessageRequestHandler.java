@@ -3,11 +3,18 @@ package com.asxing.netty.server.handler;
 import com.asxing.netty.protocol.request.GroupMessageRequestPacket;
 import com.asxing.netty.protocol.response.GroupMessageResponsePacket;
 import com.asxing.netty.utils.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 
+@ChannelHandler.Sharable
 public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
+    public static final GroupMessageRequestHandler INSTANCE  = new GroupMessageRequestHandler();
+
+    private GroupMessageRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket requestPacket) throws Exception {
         String groupId = requestPacket.getGroupId();

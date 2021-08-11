@@ -1,18 +1,11 @@
 package com.asxing.netty.server;
 
-import com.asxing.netty.codec.PacketDecoder;
-import com.asxing.netty.codec.PacketEncoder;
+import com.asxing.netty.codec.PacketCodecHandler;
 import com.asxing.netty.codec.Spliter;
 import com.asxing.netty.server.handler.AuthHandler;
-import com.asxing.netty.server.handler.CreateGroupRequestHandler;
-import com.asxing.netty.server.handler.GroupMessageRequestHandler;
-import com.asxing.netty.server.handler.JoinGroupRequestHandler;
-import com.asxing.netty.server.handler.LifeCycleTestHandler;
-import com.asxing.netty.server.handler.ListGroupMemberRequestHandler;
+import com.asxing.netty.server.handler.IMHandler;
+import com.asxing.netty.server.handler.LifeCycleHandler;
 import com.asxing.netty.server.handler.LoginRequestHandler;
-import com.asxing.netty.server.handler.LogoutResquestHandler;
-import com.asxing.netty.server.handler.MessageRequestHandler;
-import com.asxing.netty.server.handler.QuitGroupRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -59,18 +52,11 @@ public class NettyServer {
                                         "childHandler attr clientKey 对应的值："
                                                 + ch.attr(clientKey).get());
                                 ch.pipeline().addLast(new Spliter());
-                                ch.pipeline().addLast(new LifeCycleTestHandler());
-                                ch.pipeline().addLast(new PacketDecoder());
-                                ch.pipeline().addLast(new LoginRequestHandler());
-                                ch.pipeline().addLast(new AuthHandler());
-                                ch.pipeline().addLast(new MessageRequestHandler());
-                                ch.pipeline().addLast(new CreateGroupRequestHandler());
-                                ch.pipeline().addLast(new JoinGroupRequestHandler());
-                                ch.pipeline().addLast(new QuitGroupRequestHandler());
-                                ch.pipeline().addLast(new ListGroupMemberRequestHandler());
-                                ch.pipeline().addLast(new GroupMessageRequestHandler());
-                                ch.pipeline().addLast(new LogoutResquestHandler());
-                                ch.pipeline().addLast(new PacketEncoder());
+                                ch.pipeline().addLast(LifeCycleHandler.INSTANCE);
+                                ch.pipeline().addLast(PacketCodecHandler.INSTANCE);
+                                ch.pipeline().addLast(LoginRequestHandler.INSTANCE);
+                                ch.pipeline().addLast(AuthHandler.INSTANCE);
+                                ch.pipeline().addLast(IMHandler.INSTANCE);
                             }
                         });
         bind(serverBootstrap, BEGIN_PORT);

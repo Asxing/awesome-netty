@@ -5,6 +5,7 @@ import com.asxing.netty.protocol.response.CreateGroupResponsePacket;
 import com.asxing.netty.utils.IDUtil;
 import com.asxing.netty.utils.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -13,7 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+    public static final CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
+
+    private CreateGroupRequestHandler() {
+    }
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket requestPacket) throws Exception {
         List<String> userIdList = requestPacket.getUserIdList();
