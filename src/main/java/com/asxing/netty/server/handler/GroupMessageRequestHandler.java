@@ -7,9 +7,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 
-public class GroupMessageRequestHandler extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
+public class GroupMessageRequestHandler
+        extends SimpleChannelInboundHandler<GroupMessageRequestPacket> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket requestPacket) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, GroupMessageRequestPacket requestPacket)
+            throws Exception {
         String groupId = requestPacket.getGroupId();
         GroupMessageResponsePacket responsePacket = new GroupMessageResponsePacket();
         responsePacket.setFromGroupId(groupId);

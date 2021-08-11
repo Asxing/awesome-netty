@@ -8,8 +8,7 @@ public class GroupMessageRequestPacket extends Packet {
     private String groupId;
     private String message;
 
-    public GroupMessageRequestPacket() {
-    }
+    public GroupMessageRequestPacket() {}
 
     public GroupMessageRequestPacket(String groupId, String message) {
         this.groupId = groupId;
