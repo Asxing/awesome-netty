@@ -16,11 +16,15 @@ public class HeartBeatTimehandler extends ChannelInboundHandlerAdapter {
     }
 
     private void scheduleSendHeartBeat(ChannelHandlerContext ctx) {
-        ctx.executor().schedule(() -> {
-            if (ctx.channel().isActive()) {
-                ctx.writeAndFlush(new HeartBeatRequestPacket());
-                scheduleSendHeartBeat(ctx);
-            }
-        }, HEARTBEAT_INTERVAL, TimeUnit.SECONDS);
+        ctx.executor()
+                .schedule(
+                        () -> {
+                            if (ctx.channel().isActive()) {
+                                ctx.writeAndFlush(new HeartBeatRequestPacket());
+                                scheduleSendHeartBeat(ctx);
+                            }
+                        },
+                        HEARTBEAT_INTERVAL,
+                        TimeUnit.SECONDS);
     }
 }

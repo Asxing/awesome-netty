@@ -10,11 +10,11 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class HeartBeatRequestHandler extends SimpleChannelInboundHandler<HeartBeatRequestPacket> {
     public static final HeartBeatRequestHandler INSTANCE = new HeartBeatRequestHandler();
 
-    private HeartBeatRequestHandler() {
-    }
+    private HeartBeatRequestHandler() {}
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket msg) throws Exception {
+    protected void channelRead0(ChannelHandlerContext ctx, HeartBeatRequestPacket msg)
+            throws Exception {
         ctx.writeAndFlush(new HeartBeatResponsePacket());
     }
 }
