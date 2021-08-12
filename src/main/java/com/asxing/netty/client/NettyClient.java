@@ -4,6 +4,7 @@ import com.asxing.netty.client.console.ConsoleCommandManager;
 import com.asxing.netty.client.console.LogInConsoleCommand;
 import com.asxing.netty.client.handler.CreateGroupResponseHandler;
 import com.asxing.netty.client.handler.GroupMessageResponseHandler;
+import com.asxing.netty.client.handler.HeartBeatTimehandler;
 import com.asxing.netty.client.handler.JoinGroupResponseHandler;
 import com.asxing.netty.client.handler.ListGroupMemberReponseHandler;
 import com.asxing.netty.client.handler.LoginResponseHandler;
@@ -13,6 +14,7 @@ import com.asxing.netty.client.handler.QuitGroupResponseHanlder;
 import com.asxing.netty.codec.PacketDecoder;
 import com.asxing.netty.codec.PacketEncoder;
 import com.asxing.netty.codec.Spliter;
+import com.asxing.netty.server.handler.IMIdleStateHandler;
 import com.asxing.netty.utils.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -49,6 +51,7 @@ public class NettyClient {
                             protected void initChannel(SocketChannel ch) {
                                 System.out.println(
                                         "handler attr clientKey 对应的值：" + ch.attr(clientKey).get());
+                                ch.pipeline().addLast(new IMIdleStateHandler());
                                 ch.pipeline().addLast(new Spliter());
                                 ch.pipeline().addLast(new PacketDecoder());
                                 ch.pipeline().addLast(new LoginResponseHandler());
@@ -60,6 +63,7 @@ public class NettyClient {
                                 ch.pipeline().addLast(new GroupMessageResponseHandler());
                                 ch.pipeline().addLast(new LogoutResponseHandler());
                                 ch.pipeline().addLast(new PacketEncoder());
+                                ch.pipeline().addLast(new HeartBeatTimehandler());
                             }
                         });
         connect(bootstrap, "localhost", 1000, MAX_RETRY);
@@ -96,15 +100,15 @@ public class NettyClient {
         LogInConsoleCommand logInConsoleCommand = new LogInConsoleCommand();
         Scanner scanner = new Scanner(System.in);
         new Thread(
-                        () -> {
-                            while (!Thread.interrupted()) {
-                                if (SessionUtil.hasLogin(channel)) {
-                                    consoleCommandManager.exec(scanner, channel);
-                                } else {
-                                    logInConsoleCommand.exec(scanner, channel);
-                                }
-                            }
-                        })
+                () -> {
+                    while (!Thread.interrupted()) {
+                        if (SessionUtil.hasLogin(channel)) {
+                            consoleCommandManager.exec(scanner, channel);
+                        } else {
+                            logInConsoleCommand.exec(scanner, channel);
+                        }
+                    }
+                })
                 .start();
     }
 }
